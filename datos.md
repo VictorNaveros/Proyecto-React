@@ -1,0 +1,4 @@
+analisisydesarrollodesoftwar1e_db_user
+Kagc3DAYEU4o5l6R
+
+mongodb+srv://analisisydesarrollodesoftwar1e_db_user:Kagc3DAYEU4o5l6R@react.ttydga6.mongodb.net/?appName=React
