@@ -308,11 +308,14 @@ app.use('/api/products', require('./routes/products'));
 app.use('/api/auth', require('./routes/auth'));
 // Rutas de Ordenes
 app.use('/api/orders', require('./routes/orders'));
+// Rutas de administración
+app.use('/api/admin', require('./routes/admin')); 
 
 console.log('✅ Rutas API configuradas:');
 console.log('   📱 /api/products - Gestión de productos');
 console.log('   🔐 /api/auth - Autenticación y usuarios');
 console.log('   📦 /api/orders - Gestión de pedidos'); 
+console.log('   👨‍💼 /api/admin - Panel de administración');
 console.log('   🏥 /api/health - Estado del servidor');
 
 // TODO: Futuras rutas
