@@ -1,17 +1,118 @@
+/* src/index.css */
+
+/* 📝 IMPORTAR FUENTE INTER DESDE GOOGLE FONTS - DEBE IR PRIMERO */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* 🎨 DIRECTIVAS DE TAILWIND */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* 🌐 ESTILOS BASE GLOBALES */
+@layer base {
+  body {
+    @apply bg-white text-brand-gray-900 font-sans;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
 }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 
-               'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 
-               'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 🧩 COMPONENTES PERSONALIZADOS */
+@layer components {
+  /* Botón principal con gradiente */
+  .btn-primary {
+    @apply bg-gradient-to-r from-brand-lime to-green-400 
+           text-black font-semibold px-6 py-3 rounded-lg
+           hover:shadow-lg transition-all duration-300
+           hover:scale-105;
+  }
+  
+  /* Botón secundario */
+  .btn-secondary {
+    @apply bg-brand-blue text-white font-semibold px-6 py-3 rounded-lg
+           hover:bg-brand-blue/90 transition-all duration-300;
+  }
+  
+  /* Card con efecto hover */
+  .card-hover {
+    @apply bg-white rounded-xl shadow-card p-6
+           hover:shadow-hover hover:-translate-y-1
+           transition-all duration-300 cursor-pointer;
+  }
+  
+  /* Input personalizado */
+  .input-custom {
+    @apply w-full px-4 py-3 rounded-lg border-2 border-brand-gray-200
+           focus:border-brand-blue focus:outline-none
+           transition-colors duration-200;
+  }
+}
+
+/* 🛠️ UTILIDADES PERSONALIZADAS */
+@layer utilities {
+  /* Gradiente lime */
+  .bg-lime-gradient {
+    background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+  }
+  
+  /* Gradiente azul */
+  .bg-blue-gradient {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+  }
+  
+  /* Texto con gradiente */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-lime to-brand-blue;
+  }
+  
+  /* Scroll suave */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+  
+  /* Ocultar scrollbar pero mantener funcionalidad */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Animación de aparición */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* 🎭 EFECTOS DE GLASSMORPHISM */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 🌙 MODO OSCURO */
+.dark body {
+  @apply bg-brand-gray-900 text-white;
+}
+
+.dark .card-hover {
+  @apply bg-brand-gray-800 shadow-none border border-brand-gray-700;
 }
