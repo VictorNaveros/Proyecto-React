@@ -1,19 +1,21 @@
 // src/components/layout/Layout.jsx
+// VERSIÓN CORREGIDA - Con fondo negro global
+
 import Header from './Header';
 import Footer from './Footer';
 
 function Layout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header fijo arriba */}
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      {/* Header */}
       <Header />
       
-      {/* Contenido principal que crece */}
-      <main className="flex-1 bg-brand-gray-50">
+      {/* Contenido principal con fondo negro */}
+      <main className="flex-1 bg-black">
         {children}
       </main>
       
-      {/* Footer fijo abajo */}
+      {/* Footer */}
       <Footer />
     </div>
   );

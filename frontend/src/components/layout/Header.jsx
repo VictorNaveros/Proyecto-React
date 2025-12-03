@@ -1,103 +1,250 @@
 // src/components/layout/Header.jsx
-import { 
-  Navbar, 
-  NavbarBrand, 
-  NavbarContent, 
-  NavbarItem, 
-  Input,
+// VERSIÓN FINAL - Con favoritos, dark mode, auth, carrito funcionando
+
+import { useState } from 'react';
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
+  Button,
   Badge,
+  Avatar,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Avatar,
-  Button
 } from "@nextui-org/react";
-import { Search, ShoppingCart, Heart, Moon } from "lucide-react";
+import { ShoppingCart, Heart, Sun, Moon } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import { useCart } from '../../hooks/useCart';
 
-function Header() {
+export default function Header() {
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
+  const { cart } = useCart();
+  
+  // Estados locales
+  const [isDark, setIsDark] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Toggle Dark Mode
+  const toggleDarkMode = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle('dark');
+  };
+
+  // Handler para logout
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  // Items del menú para móvil
+  const menuItems = [
+    { label: 'Inicio', path: '/' },
+    { label: 'Productos', path: '/products' },
+    ...(isAuthenticated 
+      ? [
+          { label: 'Dashboard', path: '/dashboard' },
+          { label: 'Cerrar Sesión', action: handleLogout }
+        ]
+      : [
+          { label: 'Iniciar Sesión', path: '/login' },
+          { label: 'Registrarse', path: '/register' }
+        ]
+    )
+  ];
+
   return (
     <Navbar 
+      isBordered 
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
       maxWidth="full" 
-      className="bg-white/80 backdrop-blur-md border-b border-brand-gray-200"
+      className="bg-gray-900/95 backdrop-blur-md border-b border-gray-800"
     >
-      {/* LOGO - IZQUIERDA */}
-      <NavbarBrand>
-        <p className="font-bold text-3xl bg-gradient-to-r from-brand-lime to-brand-blue bg-clip-text text-transparent">
-          TechStore
-        </p>
-      </NavbarBrand>
-
-      {/* BÚSQUEDA - CENTRO */}
-      <NavbarContent justify="center" className="hidden md:flex">
-        <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[20rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper: "h-full font-normal text-default-500 bg-brand-gray-50 hover:bg-brand-gray-100",
-          }}
-          placeholder="Buscar productos..."
-          size="sm"
-          startContent={<Search size={18} />}
-          type="search"
-        />
+      {/* Logo - Izquierda */}
+      <NavbarContent justify="start">
+        <NavbarMenuToggle className="sm:hidden text-white" />
+        <NavbarBrand>
+          <div 
+            className="flex items-center gap-2 cursor-pointer" 
+            onClick={() => navigate('/')}
+          >
+            <div className="text-2xl">🪐</div>
+            <p className="font-bold text-xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              TechStore
+            </p>
+          </div>
+        </NavbarBrand>
       </NavbarContent>
 
-      {/* ICONOS - DERECHA */}
+      {/* Navegación Central - Desktop */}
+      <NavbarContent justify="center" className="hidden sm:flex gap-8">
+        <NavbarItem>
+          <Button
+            variant="light"
+            className="text-gray-300 hover:text-white"
+            onClick={() => navigate('/')}
+          >
+            Inicio
+          </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <Button
+            variant="light"
+            className="text-gray-300 hover:text-white"
+            onClick={() => navigate('/products')}
+          >
+            Productos
+          </Button>
+        </NavbarItem>
+        {isAuthenticated && (
+          <NavbarItem>
+            <Button
+              variant="light"
+              className="text-gray-300 hover:text-white"
+              onClick={() => navigate('/dashboard')}
+            >
+              Dashboard
+            </Button>
+          </NavbarItem>
+        )}
+      </NavbarContent>
+
+      {/* Acciones - Derecha */}
       <NavbarContent justify="end">
-        {/* Icono de tema oscuro */}
+        {/* Dark Mode Toggle */}
         <NavbarItem>
-          <Button isIconOnly variant="light" aria-label="Cambiar tema">
-            <Moon size={20} />
+          <Button
+            isIconOnly
+            variant="light"
+            onPress={toggleDarkMode}
+            className="text-gray-300"
+          >
+            {isDark ? <Sun size={20} /> : <Moon size={20} />}
           </Button>
         </NavbarItem>
 
-        {/* Icono de favoritos */}
+        {/* Carrito */}
         <NavbarItem>
-          <Button isIconOnly variant="light" aria-label="Favoritos">
-            <Heart size={20} />
-          </Button>
-        </NavbarItem>
-
-        {/* Icono de carrito con badge */}
-        <NavbarItem>
-          <Badge content="3" color="danger" size="sm">
-            <Button isIconOnly variant="light" aria-label="Carrito">
+          <Badge 
+            content={cart?.length || 0} 
+            color="danger" 
+            shape="circle"
+            size="sm"
+          >
+            <Button
+              isIconOnly
+              variant="light"
+              className="text-gray-300"
+              onClick={() => navigate('/dashboard')}
+            >
               <ShoppingCart size={20} />
             </Button>
           </Badge>
         </NavbarItem>
 
-        {/* Dropdown de usuario */}
+        {/* Favoritos */}
         <NavbarItem>
-          <Dropdown placement="bottom-end">
-            <DropdownTrigger>
-              <Avatar
-                isBordered
-                as="button"
-                className="transition-transform"
-                color="primary"
-                name="Usuario"
-                size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-              />
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Opciones de usuario" variant="flat">
-              <DropdownItem key="profile">
-                <p className="font-semibold">Perfil</p>
-              </DropdownItem>
-              <DropdownItem key="settings">Configuración</DropdownItem>
-              <DropdownItem key="orders">Mis pedidos</DropdownItem>
-              <DropdownItem key="logout" color="danger">
-                Cerrar sesión
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          <Button
+            isIconOnly
+            variant="light"
+            className="text-red-500 hover:text-red-400"
+          >
+            <Heart size={20} />
+          </Button>
+        </NavbarItem>
+
+        {/* Usuario / Login */}
+        <NavbarItem>
+          {isAuthenticated ? (
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  as="button"
+                  className="transition-transform"
+                  size="sm"
+                  name={user?.fullName || 'Usuario'}
+                  classNames={{
+                    base: "bg-gradient-to-br from-blue-500 to-purple-500"
+                  }}
+                />
+              </DropdownTrigger>
+              <DropdownMenu 
+                aria-label="User Actions" 
+                variant="flat"
+                className="bg-gray-900 border border-gray-800"
+              >
+                <DropdownItem 
+                  key="profile" 
+                  className="h-14 gap-2"
+                  textValue="Profile Info"
+                >
+                  <p className="font-semibold text-white">{user?.fullName}</p>
+                  <p className="text-sm text-gray-400">{user?.email}</p>
+                </DropdownItem>
+                <DropdownItem 
+                  key="dashboard"
+                  onClick={() => navigate('/dashboard')}
+                  className="text-white hover:bg-gray-800"
+                >
+                  Mi Dashboard
+                </DropdownItem>
+                <DropdownItem 
+                  key="logout"
+                  color="danger"
+                  onClick={handleLogout}
+                  className="text-red-500"
+                >
+                  Cerrar Sesión
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          ) : (
+            <Button
+              color="primary"
+              variant="flat"
+              onClick={() => navigate('/login')}
+            >
+              Iniciar Sesión
+            </Button>
+          )}
         </NavbarItem>
       </NavbarContent>
+
+      {/* Menú Móvil */}
+      <NavbarMenu className="bg-gray-900/95 backdrop-blur-md border-r border-gray-800 pt-6">
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item.label}-${index}`}>
+            {item.action ? (
+              <Button
+                variant="light"
+                className="w-full justify-start text-white hover:bg-gray-800"
+                onClick={item.action}
+              >
+                {item.label}
+              </Button>
+            ) : (
+              <Button
+                variant="light"
+                className="w-full justify-start text-white hover:bg-gray-800"
+                onClick={() => {
+                  navigate(item.path);
+                  setIsMenuOpen(false);
+                }}
+              >
+                {item.label}
+              </Button>
+            )}
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }
-
-export default Header;
