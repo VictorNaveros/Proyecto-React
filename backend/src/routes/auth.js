@@ -89,12 +89,7 @@ router.get('/dashboard', protect, getDashboard);
  * @query   userId (temporal para testing)
  * @body    { firstName?, lastName?, phone?, address?, etc }
  */
-// Actualizar perfil con validación
-    router.put('/profile',
-    updateProfileValidation,
-    handleValidationErrors,
-    updateProfile
-);
+
 
 // =============================================
 // LOG DE RUTAS CONFIGURADAS

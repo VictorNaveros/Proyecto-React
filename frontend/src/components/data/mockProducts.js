@@ -1,4 +1,17 @@
 // src/components/data/mockProducts.js
+// mockProducts.js
+// ❌ YA NO SE USA - Migrado a API real
+// Comentado el 3 Febrero 2026
+
+/* 
+export const mockProducts = [
+  {
+    id: 1,
+    name: "MacBook Pro",
+    // ... resto del código
+  }
+];
+
 
 export const mockProducts = [
   {
@@ -161,4 +174,4 @@ export const mockProducts = [
       color: "Gris espacial"
     }
   }
-];
+];*/

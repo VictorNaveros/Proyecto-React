@@ -8,15 +8,13 @@ import errorHandler from '../utils/errorHandler';
  * Obtiene la lista completa de productos desde el backend
  * @returns {Promise<Array>} Array de objetos producto
  */
-export const getProducts = async () => {
+export const getProducts = async (page = 1, limit = 12) => {
   try {
-    // Hacer petición GET a /products
-    const response = await api.get('/products');
-    
-    // Retornar solo los datos (sin el objeto response completo)
+    const response = await api.get('/products', {
+      params: { page, limit }
+    });
     return response.data;
   } catch (error) {
-    // Si hay error, lanzar el error para que el componente lo maneje
     throw errorHandler(error);
   }
 };

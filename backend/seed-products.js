@@ -1,17 +1,18 @@
 // =============================================
 // SCRIPT DE SEEDING - PRODUCTOS TECHSTORE PRO
 // =============================================
-// Este script llena la base de datos con productos de ejemplo
+// VERSIÓN MEJORADA CON MÚLTIPLES IMÁGENES PARA CARRUSEL
 // Ejecutar: node seed-products.js
 
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Product = require('./src/models/Product');
 
-console.log('🌱 Iniciando seeding de productos TechStore Pro...');
+console.log('🌱 Iniciando seeding de productos TechStore Pro (Versión con Carrusel)...');
 
 // =============================================
 // PRODUCTOS DE EJEMPLO - TECHSTORE PRO
+// CON MÚLTIPLES IMÁGENES PARA CARRUSEL
 // =============================================
 
 const productos = [
@@ -22,11 +23,13 @@ const productos = [
         price: 8999000,
         category: "laptops",
         brand: "Apple",
-        stock: 15,
+        quantity: 15,
         mainImage: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
         images: [
             "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
-            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800"
+            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800",
+            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800",
+            "https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?w=800"
         ],
         specs: {
             processor: "Apple M3",
@@ -43,10 +46,12 @@ const productos = [
         price: 5499000,
         category: "laptops",
         brand: "Apple",
-        stock: 25,
+        quantity: 25,
         mainImage: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800",
         images: [
-            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800"
+            "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800",
+            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+            "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800"
         ],
         specs: {
             processor: "Apple M2",
@@ -63,10 +68,12 @@ const productos = [
         price: 7299000,
         category: "laptops",
         brand: "Dell",
-        stock: 12,
+        quantity: 12,
         mainImage: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800",
         images: [
-            "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800"
+            "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800",
+            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800",
+            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800"
         ],
         specs: {
             processor: "Intel Core i7-13700H",
@@ -83,10 +90,12 @@ const productos = [
         price: 6499000,
         category: "laptops",
         brand: "Lenovo",
-        stock: 18,
+        quantity: 18,
         mainImage: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800",
         images: [
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800"
+            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800",
+            "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800",
+            "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=800"
         ],
         specs: {
             processor: "Intel Core i5-1335U",
@@ -105,10 +114,13 @@ const productos = [
         price: 5499000,
         category: "smartphones",
         brand: "Apple",
-        stock: 30,
-        mainImage: "https://images.unsplash.com/photo-1592286927505-4fbdeab58f40?w=800",
+        quantity: 30,
+        mainImage: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800",
         images: [
-            "https://images.unsplash.com/photo-1592286927505-4fbdeab58f40?w=800"
+            "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800",
+            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
+            "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=800",
+            "https://images.unsplash.com/photo-1603791239531-3f82cf0043f7?w=800"
         ],
         specs: {
             processor: "A17 Pro",
@@ -125,10 +137,12 @@ const productos = [
         price: 3999000,
         category: "smartphones",
         brand: "Apple",
-        stock: 40,
+        quantity: 40,
         mainImage: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
         images: [
-            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800"
+            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
+            "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800",
+            "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=800"
         ],
         specs: {
             processor: "A16 Bionic",
@@ -145,10 +159,13 @@ const productos = [
         price: 5299000,
         category: "smartphones",
         brand: "Samsung",
-        stock: 22,
+        quantity: 22,
         mainImage: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800",
         images: [
-            "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800"
+            "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800",
+            "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
+            "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=800",
+            "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=800"
         ],
         specs: {
             processor: "Snapdragon 8 Gen 3",
@@ -167,10 +184,13 @@ const productos = [
         price: 5999000,
         category: "tablets",
         brand: "Apple",
-        stock: 15,
+        quantity: 15,
         mainImage: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800",
         images: [
-            "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800"
+            "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800",
+            "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800",
+            "https://images.unsplash.com/photo-1585790050230-5dd28404f869?w=800",
+            "https://images.unsplash.com/photo-1527698266440-12104e498b76?w=800"
         ],
         specs: {
             processor: "Apple M2",
@@ -187,10 +207,12 @@ const productos = [
         price: 3499000,
         category: "tablets",
         brand: "Apple",
-        stock: 20,
+        quantity: 20,
         mainImage: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800",
         images: [
-            "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800"
+            "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800",
+            "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800",
+            "https://images.unsplash.com/photo-1585790050230-5dd28404f869?w=800"
         ],
         specs: {
             processor: "Apple M1",
@@ -207,10 +229,13 @@ const productos = [
         price: 3299000,
         category: "tablets",
         brand: "Samsung",
-        stock: 18,
-        mainImage: "https://images.unsplash.com/photo-1585789575313-5f1cf8162c1c?w=800",
+        quantity: 18,
+        mainImage: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800",
         images: [
-            "https://images.unsplash.com/photo-1585789575313-5f1cf8162c1c?w=800"
+            "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800",
+            "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800",
+            "https://images.unsplash.com/photo-1585790050230-5dd28404f869?w=800",
+            "https://images.unsplash.com/photo-1527698266440-12104e498b76?w=800"
         ],
         specs: {
             processor: "Snapdragon 8 Gen 2",
@@ -229,10 +254,13 @@ const productos = [
         price: 1299000,
         category: "audio",
         brand: "Apple",
-        stock: 50,
+        quantity: 50,
         mainImage: "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=800",
         images: [
-            "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=800"
+            "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=800",
+            "https://images.unsplash.com/photo-1572536147248-ac59a8abfa5b?w=800",
+            "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800",
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800"
         ],
         specs: {
             connectivity: "Bluetooth 5.3",
@@ -248,10 +276,12 @@ const productos = [
         price: 2599000,
         category: "audio",
         brand: "Apple",
-        stock: 10,
+        quantity: 10,
         mainImage: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800",
         images: [
-            "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800"
+            "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800",
+            "https://images.unsplash.com/photo-1545127398-14699f92334b?w=800",
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800"
         ],
         specs: {
             connectivity: "Bluetooth 5.0",
@@ -267,10 +297,13 @@ const productos = [
         price: 1599000,
         category: "audio",
         brand: "Sony",
-        stock: 25,
+        quantity: 25,
         mainImage: "https://images.unsplash.com/photo-1545127398-14699f92334b?w=800",
         images: [
-            "https://images.unsplash.com/photo-1545127398-14699f92334b?w=800"
+            "https://images.unsplash.com/photo-1545127398-14699f92334b?w=800",
+            "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800",
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+            "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=800"
         ],
         specs: {
             connectivity: "Bluetooth 5.2, LDAC",
@@ -288,10 +321,13 @@ const productos = [
         price: 2199000,
         category: "wearables",
         brand: "Apple",
-        stock: 28,
+        quantity: 28,
         mainImage: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800",
         images: [
-            "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800"
+            "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800",
+            "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=800",
+            "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800",
+            "https://images.unsplash.com/photo-1510017803434-a899398421b3?w=800"
         ],
         specs: {
             processor: "Apple S9",
@@ -307,10 +343,12 @@ const productos = [
         price: 1299000,
         category: "wearables",
         brand: "Apple",
-        stock: 35,
+        quantity: 35,
         mainImage: "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=800",
         images: [
-            "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=800"
+            "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=800",
+            "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800",
+            "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800"
         ],
         specs: {
             processor: "Apple S8",
@@ -333,24 +371,34 @@ const seedProducts = async () => {
         await mongoose.connect(process.env.MONGODB_URI);
         console.log('✅ Conexión exitosa a MongoDB');
 
-        // LIMPIAR COLECCIÓN DE PRODUCTOS (OPCIONAL)
+        // LIMPIAR COLECCIÓN DE PRODUCTOS
         console.log('🗑️  Limpiando productos existentes...');
         await Product.deleteMany({});
         console.log('✅ Productos existentes eliminados');
 
         // INSERTAR PRODUCTOS
-        console.log('🌱 Insertando productos de ejemplo...');
+        console.log('🌱 Insertando productos con múltiples imágenes...');
         const productosInsertados = await Product.insertMany(productos);
         
         console.log('\n✅ SEEDING COMPLETADO EXITOSAMENTE! 🎉\n');
         console.log(`📦 Total de productos insertados: ${productosInsertados.length}`);
-        console.log('\n📊 Resumen por categoría:');
         
+        // Estadísticas de imágenes
+        console.log('\n📸 Estadísticas de imágenes para carrusel:');
+        const imageStats = {};
+        productosInsertados.forEach(p => {
+            const count = p.images?.length || 0;
+            imageStats[count] = (imageStats[count] || 0) + 1;
+        });
+        Object.entries(imageStats).forEach(([count, products]) => {
+            console.log(`   ${count} imágenes: ${products} productos`);
+        });
+        
+        console.log('\n📊 Resumen por categoría:');
         const categorias = {};
         productosInsertados.forEach(p => {
             categorias[p.category] = (categorias[p.category] || 0) + 1;
         });
-        
         Object.entries(categorias).forEach(([cat, count]) => {
             console.log(`   ${cat}: ${count} productos`);
         });
@@ -363,7 +411,8 @@ const seedProducts = async () => {
         
         console.log('\n🎯 Productos destacados:', productosInsertados.filter(p => p.featured).length);
         
-        console.log('\n✅ Base de datos lista para usar!');
+        console.log('\n🎠 Productos listos para CARRUSEL DE IMÁGENES!');
+        console.log('✅ Base de datos lista para usar!');
         console.log('🚀 Ahora puedes probar: GET http://localhost:5000/api/products\n');
 
     } catch (error) {

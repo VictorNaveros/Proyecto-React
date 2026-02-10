@@ -44,7 +44,7 @@ function Login() {
 
     if (result.success) {
       success(`Bienvenido ${result.user.fullName}`);
-      navigate('/dashboard');
+      navigate('/');
     } else {
       error(result.message || 'Error al iniciar sesión');
     }

@@ -1,6 +1,5 @@
 // src/pages/Register.jsx
-// ✨ PÁGINA DE REGISTRO - DISEÑO NEGRO PROFESIONAL
-// Copia este código completo en: src/pages/Register.jsx
+// ✅ VERSIÓN CORREGIDA - Envía objeto completo
 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
@@ -63,18 +62,19 @@ function Register() {
 
     setIsLoading(true);
 
-    const result = await register(
-      formData.email,
-      formData.password,
-      formData.firstName,
-      formData.lastName
-    );
+    // ✅ CORREGIDO: Enviar objeto completo
+    const result = await register({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password
+    });
 
     setIsLoading(false);
 
     if (result.success) {
       success('Cuenta creada exitosamente');
-      navigate('/dashboard');
+      navigate('/');
     } else {
       error(result.message || 'Error al crear la cuenta');
     }
@@ -171,17 +171,21 @@ function Register() {
                 <button
                   className="focus:outline-none"
                   type="button"
-                  onClick={toggleVisibility}
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    toggleVisibility();
+                  }}
+                  aria-label="toggle password visibility"
                 >
                   {isVisible ? (
                     <Icon
                       icon="solar:eye-closed-linear"
-                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors"
+                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors pointer-events-none"
                     />
                   ) : (
                     <Icon
                       icon="solar:eye-bold"
-                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors"
+                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors pointer-events-none"
                     />
                   )}
                 </button>
@@ -210,17 +214,21 @@ function Register() {
                 <button
                   className="focus:outline-none"
                   type="button"
-                  onClick={toggleConfirmVisibility}
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    toggleConfirmVisibility();
+                  }}
+                  aria-label="toggle password visibility"
                 >
                   {isConfirmVisible ? (
                     <Icon
                       icon="solar:eye-closed-linear"
-                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors"
+                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors pointer-events-none"
                     />
                   ) : (
                     <Icon
                       icon="solar:eye-bold"
-                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors"
+                      className="text-2xl text-gray-400 hover:text-gray-300 transition-colors pointer-events-none"
                     />
                   )}
                 </button>
